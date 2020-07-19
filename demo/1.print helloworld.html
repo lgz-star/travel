@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>hello world</title>
+		<script src="../js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">{{content}}</div>  //绑定data中的content
+		<script>
+			//实例化Vue
+			var app = new Vue({
+				el:'#app',
+				data:{
+					content:'hello world1'
+				}
+			})
+			//定时器，两秒后改变内容
+			// setTimeout(function(){
+			// 	app.$data.content = 'bye world'
+			// },2000)
+		</script>
+	</body>
+</html>

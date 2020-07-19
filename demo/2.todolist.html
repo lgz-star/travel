@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>待办事项</title>
+		<script src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 点击代办事项变为已办事项 -->
+		<div id="app">
+			<input type="text"  v-model="inputvalue" />
+			<button v-on:click="handlebtnclick">添加待办事项</button>
+			<p>待办事项</p>
+			<ul>
+				<todo-item :content="item" 
+						   :key="index"
+						   v-for="(item,index) in todolist"
+						   v-on:delete="handleitemclick">
+				</todo-item>
+			</ul>
+			<p>已办事项</p>
+			<ul>
+				<done-item :content="item"
+						   :key="index"
+						   v-for="(item,index) in donelist">
+				</done-item>
+			</ul>
+		</div>
+		<script>
+			//创建全局组件/待办组件
+			Vue.component("todo-item",{
+				props:['content'],												//外部传过来的值
+				template:"<li v-on:click='handleitemclick'>{{content}}</li>",   //组件模板
+				methods:{
+					handleitemclick:function(){
+						this.$emit('delete',this.index,this.content);
+					}
+				}
+			})
+			//创建全局组件/已办组件
+			Vue.component("done-item",{
+				props:['content'],
+				template:"<li>{{content}}</li>"
+			})
+			//实例化
+			var app = new Vue({
+				el:'#app',
+				data:{
+					todolist:['买菜','扫地'],
+					donelist:[],
+					inputvalue:''
+				},
+				methods:{
+					//添加待办
+					handlebtnclick:function(){
+						if(this.inputvalue){
+							this.todolist.push(this.inputvalue)    //把文本框内容添加到列表中
+							this.inputvalue = '';			  	   //清空文本框
+						}
+					},
+					//结束待办
+					handleitemclick:function(index,content){	
+						this.donelist.push(content)				   //把点击的代办事项添加到已办事项
+						this.todolist.splice(index,1);			   //把点击的代办事项清除
+						
+						
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
