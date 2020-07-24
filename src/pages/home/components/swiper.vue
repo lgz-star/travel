@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <swiper :options="swiperOptions">
-        <swiper-slide v-for="item of swiperList" :key="item.id">
+    <swiper :options="swiperOptions" v-if="showSwiper">
+        <swiper-slide v-for="item of swiperlist" :key="item.id">
           <img class="swiper-img" :src="item.url" />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -12,22 +12,22 @@
 <script>
 export default {
   name: 'HomeSwiper',
+  props: {
+    swiperlist: Array
+  },
   data: function () {
     return {
       swiperOptions: {
         pagination: '.swiper-pagination',
         loop: 'true'
-      },
-      swiperList: [{
-        id: '001',
-        url: 'https://imgs.qunarzz.com/vs_ceph_vcimg/b8c4527c41649814cc4cf86880abba54.jpeg'
-      }, {
-        id: '002',
-        url: 'https://imgs.qunarzz.com/vc/e3/a1/71/f498dfd3bed948d623c9093252.jpg_92.jpg'
-      }, {
-        id: '003',
-        url: 'https://imgs.qunarzz.com/vc/6d/9f/35/b8ad5468f73fd60ec0ced086f6.jpg_92.jpg'
-      }]
+      }
+    }
+  },
+  // 一开始是空数组，加载axios数据后会显示最后一张轮播图
+  // v-if判断swiper有数据再加载就不会直接显示最后一张轮播图了
+  computed: {
+    showSwiper () {
+      return this.swiperlist.length
     }
   }
 }
