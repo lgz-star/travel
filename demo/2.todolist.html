@@ -3,7 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title>待办事项</title>
-		<script src="../js/vue.js"></script>
+		<script src="./vue.js"></script>
+    <style>
+      ul{
+        border: 1px solid #000000;
+        width: 100px;
+        min-height: 40px;
+      }
+    </style>
 	</head>
 	<body>
 		<!-- 点击代办事项变为已办事项 -->
@@ -12,17 +19,17 @@
 			<button v-on:click="handlebtnclick">添加待办事项</button>
 			<p>待办事项</p>
 			<ul>
-				<todo-item :content="item" 
-						   :key="index"
-						   v-for="(item,index) in todolist"
-						   v-on:delete="handleitemclick">
+				<todo-item :content="item"
+                   :key="index"
+                   v-for="(item,index) in todolist"
+                   v-on:delete="handleitemclick">
 				</todo-item>
 			</ul>
 			<p>已办事项</p>
 			<ul>
 				<done-item :content="item"
-						   :key="index"
-						   v-for="(item,index) in donelist">
+                   :key="index"
+                   v-for="(item,index) in donelist">
 				</done-item>
 			</ul>
 		</div>
@@ -59,11 +66,9 @@
 						}
 					},
 					//结束待办
-					handleitemclick:function(index,content){	
+					handleitemclick:function(index,content){
 						this.donelist.push(content)				   //把点击的代办事项添加到已办事项
 						this.todolist.splice(index,1);			   //把点击的代办事项清除
-						
-						
 					}
 				}
 			})

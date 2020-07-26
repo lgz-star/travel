@@ -3,25 +3,35 @@
 	<head>
 		<meta charset="utf-8">
 		<title>非父子组件间传值(bus/总线/发布者订阅模式/观察者模式)</title>
-		<script src="../js/vue.js"></script>
+		<script src="./vue.js"></script>
+    <style>
+      .div{
+        border: 1px solid #000000;
+        width: 100px;
+        margin-bottom: 10px;
+      }
+    </style>
 	</head>
 	<body>
 		<div id="app">
-			<child content="我是兄弟1"></child>
-			<child content="我是兄弟2"></child>
+			<child-brother1 content="我是要传的值"></child-brother1>
+			<child-brother2 content=""></child-brother2>
 		</div>
 		<script>
 			//通过bus总线实现非父子组件传值/这里是兄弟组件传值
 			Vue.prototype.bus = new Vue();
 			//定义一个全局组件
-			Vue.component('child',{
+			Vue.component('child-brother1',{
 				props:['content'],
 				data:function(){
 					return{
 						selfcontent:this.content      			  //把父组件的值传给selfcontent,再绑定子组件
 					}
 				},
-				template:'<div @click="handliclick">{{selfcontent}}</div>',
+				template:`<div class="div">
+                    <p>兄弟1</p>
+                    <div @click="handliclick">{{selfcontent}}</div>
+                  </div>`,
 				methods:{
 					handliclick:function(){
 						this.bus.$emit('change',this.content)     //当组件被点击时出发change事件，并把content传值
@@ -34,11 +44,35 @@
 					})
 				}
 			})
+      //兄弟组件2
+      Vue.component('child-brother2',{
+      	props:['content'],
+      	data:function(){
+      		return{
+      			selfcontent:this.content      			  //把父组件的值传给selfcontent,再绑定子组件
+      		}
+      	},
+      	template:`<div class="div">
+                    <p>兄弟2</p>
+                    <div @click="handliclick">{{selfcontent}}</div>
+                  </div>`,
+      	methods:{
+      		handliclick:function(){
+      			this.bus.$emit('change',this.content)     //当组件被点击时出发change事件，并把content传值
+      		}
+      	},
+      	mounted:function(){
+      		var this_ = this
+      		this.bus.$on('change',function(e){			  //监听/当change事件激活，获取传过来的值，并赋值给自身
+      			this_.selfcontent = e					  //之所以不是赋值给content而是selfcontent,是因为content来源于父组件，直接更改会报错
+      		})
+      	}
+      })
 			//实例化vue
 			var vm = new Vue({
-				el:'#app'		
+				el:'#app'
 			})
-			
+
 		</script>
 	</body>
 </html>
