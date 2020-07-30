@@ -17,7 +17,12 @@
           </div>
         </div>
       </div>
-      <div class="area" v-for="(item, key) of cities" :key="key">
+      <div
+        class="area"
+        v-for="(item, key) of cities"
+        :key="key"
+        :ref="key"
+      >
         <div class="title border-bottom">{{key}}</div>
         <div class="item-list">
           <div class="item border-bottom"
@@ -37,10 +42,28 @@ import Bscroll from 'better-scroll'
 export default {
   name: 'CityList',
   props: {
-    cities: {},
-    hot: Array
+    cities: Object,
+    hot: Array,
+    letter: String
+  },
+  watch: {
+    // 动态绑定的ref获取的$refs是一个数组
+    // 但这里的$ref获取的是一个对象，原因未知
+    // 只能使用object.entries转化为数组再使用
+    // this.letter和clickkey虽然肉眼相等，但是===为false
+    // 解决方法：a.trim()===b.trim():去除周围的空格
+    letter () {
+      const clickkey = Object.entries(this.$refs)
+      for (var i = 1; i < clickkey.length; i++) {
+        if (this.letter.trim() === clickkey[i][0][0].trim()) {
+          const element = clickkey[i][1][0]
+          this.scroll.scrollToElement(element)
+        }
+      }
+    }
   },
   mounted () {
+    // 实现滚动
     this.scroll = new Bscroll(this.$refs.wrapper)
   }
 }
