@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="banner" @click="handlebannerclick">
-      <img class="banner-img" src="//img1.qunarzz.com/sight/p0/201404/23/04b92c99462687fa1ba45c1b5ba4ad77.jpg_600x330_bf9c4904.jpg" />
+      <img class="banner-img" :src="bannerImg" />
       <div class="banner-info">
         <div class="banner-title">
-          大连圣亚海洋世界(AAAA景区)
+          {{this.sightName}}
         </div>
         <div>
           <span class="iconfont banner-icon">&#xe635;</span>
-          39
+          {{this.bannerImgs.length}}
         </div>
       </div>
     </div>
     <common-gallary
-      :imgs="imgs"
+      :imgs="bannerImgs"
       v-show="showgallary"
       @close="handlebannerclose"
     >
@@ -28,16 +28,21 @@ export default {
   components: {
     commonGallary
   },
+  props: {
+    sightName: String,
+    bannerImg: String,
+    bannerImgs: Array
+  },
   data () {
     return {
-      showgallary: false,
-      imgs: ['https://imgs.qunarzz.com/sight/p0/1709/76/7691528bc7d7ad3ca3.img.png_350x240_8d02892d.png',
-        'https://imgs.qunarzz.com/sight/p0/1709/9b/9b7be1ecb890dc47a3.img.png_350x240_72f624ca.png']
+      showgallary: false
     }
   },
   methods: {
     handlebannerclick () {
       this.showgallary = true
+      // console.log(this.bannerImg)
+      // console.log(this.bannerImgs)
     },
     handlebannerclose () {
       this.showgallary = false
