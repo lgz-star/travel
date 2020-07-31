@@ -12,21 +12,25 @@
         </div>
       </div>
     </div>
-    <common-gallary
-      :imgs="bannerImgs"
-      v-show="showgallary"
-      @close="handlebannerclose"
-    >
-    </common-gallary>
+    <fade-animation>
+      <common-gallary
+        :imgs="bannerImgs"
+        v-show="showgallary"
+        @close="handlebannerclose"
+      >
+      </common-gallary>
+    </fade-animation>
   </div>
 </template>
 
 <script>
 import commonGallary from 'common/gallary/gallary'
+import FadeAnimation from 'common/fade/fade'
 export default {
   name: 'detailbanner',
   components: {
-    commonGallary
+    commonGallary,
+    FadeAnimation
   },
   props: {
     sightName: String,
@@ -41,8 +45,6 @@ export default {
   methods: {
     handlebannerclick () {
       this.showgallary = true
-      // console.log(this.bannerImg)
-      // console.log(this.bannerImgs)
     },
     handlebannerclose () {
       this.showgallary = false

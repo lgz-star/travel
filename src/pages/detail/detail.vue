@@ -46,7 +46,6 @@ export default {
         this.bannerImg = data.bannerImg
         this.gallaryImg = data.gallaryImgs
         this.list = data.categoryList
-        console.log(data)
       }
     }
   },

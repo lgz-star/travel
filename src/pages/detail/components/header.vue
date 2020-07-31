@@ -44,8 +44,7 @@ export default {
       }
     }
   },
-  deactivated () {
-    // 使用了keep-alive,activated就可以一直使用
+  mounted () {
     window.addEventListener('scroll', this.handlescroll)
   }
 }
@@ -67,7 +66,7 @@ export default {
       color: #FFF
       font-size: .4rem
   .header-fixed
-    z-index: 3
+    z-index: 1
     position: fixed
     top: 0
     left: 0
