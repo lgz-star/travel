@@ -13,9 +13,9 @@ module.exports = {
     proxyTable: {
 		//代理功能                            // 这个功能不是vue提供的
 		'/api': {                            // 是webpack-dev-server这个工具提供的
-			target: 'http://localhost:8080',
+			target: 'http://localhost:9900',
 			pathRewrite: {                     // 路径替换
-				'^/api': '/static/mock'          // 当访问api目录时，转到static/mock目录下
+				'^/api': '/project/api'          // 当访问api目录时，转到static/mock目录下
 			}
 		}
 	},
@@ -58,7 +58,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps
